@@ -15,12 +15,12 @@ blue=$(echo "$current_gamma" | cut -d':' -f3)
 red=$(echo "scale=2; 1/$red" | bc)
 green=$(echo "scale=2; 1/$green" | bc)
 blue=$(echo "scale=2; 1/$blue" | bc)
- 
 
 MIN_BRIGHTNESS=0.0
 
-# increase bright
-if [ $(echo "$current_brightness > $MIN_BRIGHTNESS" | bc) -eq 1 ]; then
-    xrandr --output $screen_name --brightness $(echo "$current_brightness-0.1" | bc) --gamma $red:$green:$blue
+# decrease brightness
+current_brightness=$(echo "$current_brightness-0.1" | bc)
+if [ $(echo "$current_brightness >= $MIN_BRIGHTNESS" | bc) -eq 1 ]; then
+    sed -i "s/default_brightness=.*/default_brightness=$current_brightness/" .zshrc
+    xrandr --output $screen_name --brightness $current_brightness --gamma $red:$green:$blue
 fi
-

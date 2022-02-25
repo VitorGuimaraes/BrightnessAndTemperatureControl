@@ -14,10 +14,10 @@ gamma=$(echo "$current_red"+"$current_green"+"$current_blue" | bc)
 if [ $(echo "$gamma >= 2.5 && $gamma < 2.6" | bc) -eq 1 ]; then 
     target_gamma='0.80:0.80:1.0'
 elif [ $(echo "$gamma >= 2.6 && $gamma < 2.7" | bc) -eq 1 ]; then
-    target_gamma='0.80:0.90:1.0'
+    target_gamma='0.80:0.90:1.0' 
 elif [ $(echo "$gamma >= 2.7 && $gamma < 2.8" | bc) -eq 1 ]; then
     target_gamma='0.90:0.90:1.0'
-elif [ $(echo "$gamma >= 2.8 && $gamma < 3" | bc) -eq 1 ]; then
+elif [ $(echo "$gamma >= 2.8 && $gamma <= 3" | bc) -eq 1 ]; then
     target_gamma='1.0:1.0:1.0'
 fi
 
@@ -26,8 +26,12 @@ red=$(echo "$target_gamma" | cut -d':' -f1)
 green=$(echo "$target_gamma" | cut -d':' -f2)
 blue=$(echo "$target_gamma" | cut -d':' -f3)
 
+sed -i "s/default_gamma=.*/default_gamma=$target_gamma/" .zshrc
+
 red=$(echo "scale=2; 1/$red" | bc)
 green=$(echo "scale=2; 1/$green" | bc)
 blue=$(echo "scale=2; 1/$blue" | bc)
 
+# sed -i "s/default_gamma=.*/default_gamma=$red:$green:$blue/" .zshrc
 xrandr --output $screen_name --brightness $(echo $current_brightness) --gamma $red:$green:$blue 
+
