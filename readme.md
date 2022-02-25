@@ -2,6 +2,7 @@
 2) give all permissions with sudo chmod +x script.sh
 3) create a shorcut for each script: Search for Keyboard -> Application Shortcuts
 4) add in your .bashrc:
+
 #Set screen brightness and gamma default
 export default_brightness=.60
 export default_gamma=1.0:1.0:1.0
