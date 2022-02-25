@@ -26,11 +26,9 @@ red=$(echo "$target_gamma" | cut -d':' -f1)
 green=$(echo "$target_gamma" | cut -d':' -f2)
 blue=$(echo "$target_gamma" | cut -d':' -f3)
 
-sed -i "s/default_gamma=.*/default_gamma=$target_gamma/" .zshrc
-
 red=$(echo "scale=2; 1/$red" | bc)
 green=$(echo "scale=2; 1/$green" | bc)
 blue=$(echo "scale=2; 1/$blue" | bc)
 
-# sed -i "s/default_gamma=.*/default_gamma=$red:$green:$blue/" .zshrc
+sed -i "s/default_gamma=.*/default_gamma=$target_gamma/" .zshrc
 xrandr --output $screen_name --brightness $(echo $current_brightness) --gamma $red:$green:$blue 
