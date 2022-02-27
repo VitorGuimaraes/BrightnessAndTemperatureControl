@@ -28,8 +28,6 @@ green=$(echo "scale=3; 1/$green" | bc)
 blue=$(echo "scale=3; 1/$blue" | bc)
 
 gamma=$(echo ${temperatures[$red:$green:$blue]})
-echo $red:$green:$blue
-echo $gamma
 
 xrandr --output $screen_name --brightness $(echo $current_brightness) --gamma $(echo $gamma)
 sed -i "s/default_gamma=.*/default_gamma=$gamma/" .zshrc
